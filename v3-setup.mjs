@@ -18,4 +18,6 @@ if (!network || !networks[network]) {
 
 await $`yarn workspace @pancakeswap/v3-core run hardhat run scripts/setupFactory.ts --network ${network}`
 
+await $`yarn workspace @pancakeswap/masterchef-v3 run hardhat run scripts/setupMasterChef.ts --network ${network}`
+
 console.log(chalk.blue('Done!'))
