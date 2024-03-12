@@ -7,6 +7,7 @@ const networks = {
   bscMainnet: 'bscMainnet',
   bscTestnet: 'bscTestnet',
   etherlinkTestnet: 'etherlinkTestnet',
+  etherlink: 'etherlink',
   hardhat: 'hardhat',
 }
 
