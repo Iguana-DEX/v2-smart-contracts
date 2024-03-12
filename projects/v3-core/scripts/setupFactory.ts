@@ -17,7 +17,7 @@ async function main() {
   const pancakeV3Factory = await ethers.getContractAt("PancakeV3Factory", deployments.PancakeV3Factory);
 
   // set lm pool deployer & owner on factory
-  await (await pancakeV3Factory.setLmPoolDeployer(deploymentsGlobal.PancakeV3LmPoolDeployer)).wait();
+  // await (await pancakeV3Factory.setLmPoolDeployer(deploymentsGlobal.PancakeV3LmPoolDeployer)).wait();
   await (await pancakeV3Factory.setOwner(owner.address)).wait();
   console.log("LM pool deployer and owner set on Factory.");
 }
