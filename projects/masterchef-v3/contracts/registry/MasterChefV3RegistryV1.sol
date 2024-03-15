@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "./KeeperRegistryBase.sol";
 import "./KeeperRegistryLogic1_3.sol";
-import {KeeperRegistryExecutableInterface} from "./interfaces/KeeperRegistryInterface1_3.sol";
+import {KeeperRegistryExecutableInterface} from "../interfaces/KeeperRegistryInterface1_3.sol";
 import "../interfaces/MigratableKeeperRegistryInterface.sol";
 import "../interfaces/TypeAndVersionInterface.sol";
 import "../interfaces/ERC677ReceiverInterface.sol";

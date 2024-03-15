@@ -21,15 +21,17 @@ async function main() {
   await (await masterChefV3.setLMPoolDeployer(deploymentsGlobal.PancakeV3LmPoolDeployer)).wait();
   // masterchef receiver v2
   await (await masterChefV3.setReceiver(deployments.MasterChefV3ReceiverV2)).wait();
-  console.log("LM pool deployer and owner set on Factory.");
+  console.log("Receiver set on MasterChefV3.");
 
   // set operator with keeper as arg on receiver
   const masterChefV3ReceiverV2 = await ethers.getContractAt("MasterChefV3ReceiverV2", deployments.MasterChefV3ReceiverV2);
   await (await masterChefV3ReceiverV2.setOperator(deployments.MasterChefV3KeeperV2)).wait();
+  console.log("Operator set on MasterChefV3Receiver.");
 
   // set on keeper set period duration: 129600 + set registry: chainlink upkeep etc
   const masterChefV3KeeperV2 = await ethers.getContractAt("MasterChefV3KeeperV2", deployments.MasterChefV3KeeperV2);
   await (await masterChefV3KeeperV2.setPeriodDuration(129600)).wait();
+  console.log("PeriodDuration set on MasterChefV3KeeperV2.");
 }
 
 main()
