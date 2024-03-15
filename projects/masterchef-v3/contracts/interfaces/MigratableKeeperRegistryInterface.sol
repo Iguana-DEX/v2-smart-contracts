@@ -2,7 +2,7 @@
 
 pragma solidity ^0.8.0;
 
-import "../UpkeepFormat.sol";
+import "./UpkeepFormat.sol";
 
 interface MigratableKeeperRegistryInterface {
     /**
