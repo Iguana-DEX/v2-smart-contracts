@@ -9,7 +9,9 @@ import "@openzeppelin/contracts-0.8/security/Pausable.sol";
 import "./libraries/SafeCast.sol";
 
 interface VotingEscrow {
-    function userInfo(address user)
+    function userInfo(
+        address user
+    )
         external
         view
         returns (
@@ -60,7 +62,7 @@ contract GaugeVoting is Ownable, Pausable {
         uint256 end;
     }
 
-    uint256 constant MULTIPLIER = 10**18;
+    uint256 constant MULTIPLIER = 10 ** 18;
 
     uint256 constant BOOST_PRECISION = 100;
     uint256 constant CAP_PRECISION = 10000;
@@ -330,11 +332,7 @@ contract GaugeVoting is Ownable, Pausable {
     /// @param gauge_addr `GaugeController` contract address
     /// @param weight New Gauge weight
     /// @param _chainId the gauge's chainId
-    function changeGaugeWeight(
-        address gauge_addr,
-        uint256 weight,
-        uint256 _chainId
-    ) external onlyOwner {
+    function changeGaugeWeight(address gauge_addr, uint256 weight, uint256 _chainId) external onlyOwner {
         _changeGaugeWeight(gauge_addr, weight, _chainId);
     }
 
@@ -362,11 +360,7 @@ contract GaugeVoting is Ownable, Pausable {
     /// @param time Relative weight at the specified timestamp in the past or present
     /// @param _chainId the gauge's chainId
     /// @return Value of relative weight normalized to 1e18
-    function gaugeRelativeWeight(
-        address gauge_addr,
-        uint256 time,
-        uint256 _chainId
-    ) external view returns (uint256) {
+    function gaugeRelativeWeight(address gauge_addr, uint256 time, uint256 _chainId) external view returns (uint256) {
         return _gaugeRelativeWeight(gauge_addr, time, _chainId);
     }
 
@@ -377,11 +371,7 @@ contract GaugeVoting is Ownable, Pausable {
     /// @param time Relative weight at the specified timestamp in the past or present
     /// @param _chainId the gauge's chainId
     /// @return Value of relative weight normalized to 1e18
-    function gaugeRelativeWeight_write(
-        address gauge_addr,
-        uint256 time,
-        uint256 _chainId
-    ) external returns (uint256) {
+    function gaugeRelativeWeight_write(address gauge_addr, uint256 time, uint256 _chainId) external returns (uint256) {
         bytes32 gauge_hash = keccak256(abi.encodePacked(gauge_addr, _chainId));
         uint256 idx = gaugeIndex_[gauge_hash];
         require(idx > 0, "Gauge not added");
@@ -504,11 +494,7 @@ contract GaugeVoting is Ownable, Pausable {
     /// @param gauge_addr Gauge address
     /// @param _chainId the gauge's chainId
     /// @return Gauge weight
-    function getGaugeWeight(
-        address gauge_addr,
-        uint256 _chainId,
-        bool inCap
-    ) public view returns (uint256) {
+    function getGaugeWeight(address gauge_addr, uint256 _chainId, bool inCap) public view returns (uint256) {
         bytes32 gauge_hash = keccak256(abi.encodePacked(gauge_addr, _chainId));
         uint256 idx = gaugeIndex_[gauge_hash];
         require(idx > 0, "Gauge not added");
@@ -639,11 +625,7 @@ contract GaugeVoting is Ownable, Pausable {
 
     /// @notice Change gauge weight
     /// @dev Only need when testing in reality
-    function _changeGaugeWeight(
-        address gauge_addr,
-        uint256 _weight,
-        uint256 _chainId
-    ) internal {
+    function _changeGaugeWeight(address gauge_addr, uint256 _weight, uint256 _chainId) internal {
         bytes32 gauge_hash = keccak256(abi.encodePacked(gauge_addr, _chainId));
         uint256 gauge_type = gaugeTypes_[gauge_hash] - 1;
 
@@ -813,11 +795,7 @@ contract GaugeVoting is Ownable, Pausable {
     /// @param _time Relative weight at the specified timestamp in the past or present
     /// @param _chainId the gauge's chainId
     /// @return Value of relative weight normalized to 1e18
-    function _gaugeRelativeWeight(
-        address gauge_addr,
-        uint256 _time,
-        uint256 _chainId
-    ) internal view returns (uint256) {
+    function _gaugeRelativeWeight(address gauge_addr, uint256 _time, uint256 _chainId) internal view returns (uint256) {
         uint256 t = (_time / WEEK) * WEEK;
         uint256 totalWeight = gaugePointsTotal[t];
 
@@ -913,12 +891,7 @@ contract GaugeVoting is Ownable, Pausable {
     }
 
     /// @notice Allocate voting power for changing pool weights
-    function _voteFromAdmin(
-        address _gauge_addr,
-        uint256 _admin_weight,
-        uint256 _end,
-        uint256 _chainId
-    ) internal {
+    function _voteFromAdmin(address _gauge_addr, uint256 _admin_weight, uint256 _end, uint256 _chainId) internal {
         uint256 nextTime = _getNextTime();
         require(_end > nextTime || _end == 0, "Your end timestamp expires too soon");
         require(_admin_weight <= 10000, "admin weight is overflow");
@@ -1033,12 +1006,7 @@ contract GaugeVoting is Ownable, Pausable {
     }
 
     /// @notice Allocate voting power for changing pool weights
-    function _vote2(
-        bytes32 gauge_hash,
-        VotedSlope memory new_slope,
-        uint256 old_bias,
-        uint256 new_bias
-    ) internal {
+    function _vote2(bytes32 gauge_hash, VotedSlope memory new_slope, uint256 old_bias, uint256 new_bias) internal {
         uint256 next_time = _getNextTime();
         uint256 gauge_type = gaugeTypes_[gauge_hash] - 1;
 
@@ -1064,12 +1032,7 @@ contract GaugeVoting is Ownable, Pausable {
     }
 
     /// @notice Allocate voting power for changing pool weights
-    function _vote3(
-        bytes32 gauge_hash,
-        VotedSlope memory old_slope,
-        uint256 old_bias,
-        uint256 new_bias
-    ) internal {
+    function _vote3(bytes32 gauge_hash, VotedSlope memory old_slope, uint256 old_bias, uint256 new_bias) internal {
         uint256 gauge_type = gaugeTypes_[gauge_hash] - 1;
 
         gaugeChangesWeight[gauge_hash][old_slope.end] -= old_slope.slope;

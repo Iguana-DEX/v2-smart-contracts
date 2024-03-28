@@ -97,7 +97,7 @@ contract VECake is Ownable, ReentrancyGuard {
     uint256 public constant WEEK = 7 days;
     // MAX_LOCK 209 weeks - 1 seconds
     uint256 public constant MAX_LOCK = (209 * WEEK) - 1;
-    uint256 public constant MULTIPLIER = 10**18;
+    uint256 public constant MULTIPLIER = 10 ** 18;
 
     // Token to be locked (Cake)
     IERC20 public immutable token;
@@ -193,11 +193,7 @@ contract VECake is Ownable, ReentrancyGuard {
      * @param _token: Cake Token contract
      * @param _ProxyForCakePoolFactory The cake pool proxy factory
      */
-    constructor(
-        ICakePool _cakePool,
-        IERC20 _token,
-        IProxyForCakePoolFactory _ProxyForCakePoolFactory
-    ) {
+    constructor(ICakePool _cakePool, IERC20 _token, IProxyForCakePoolFactory _ProxyForCakePoolFactory) {
         CakePool = _cakePool;
         token = _token;
         ProxyForCakePoolFactory = _ProxyForCakePoolFactory;
@@ -229,7 +225,9 @@ contract VECake is Ownable, ReentrancyGuard {
     /// @return migrationTime Record the migration time
     /// @return cakePoolType 1: Migration, 2: Delegation
     /// @return withdrawFlag 0: Not withdraw, 1 : withdrew
-    function getUserInfo(address _user)
+    function getUserInfo(
+        address _user
+    )
         external
         view
         returns (
@@ -367,11 +365,7 @@ contract VECake is Ownable, ReentrancyGuard {
     /// @param _address User's wallet address. Only global if 0x0
     /// @param _prevLocked User's previous locked balance and end lock time
     /// @param _newLocked User's new locked balance and end lock time
-    function _checkpoint(
-        address _address,
-        LockedBalance memory _prevLocked,
-        LockedBalance memory _newLocked
-    ) internal {
+    function _checkpoint(address _address, LockedBalance memory _prevLocked, LockedBalance memory _newLocked) internal {
         Point memory _userPrevPoint = Point({slope: 0, bias: 0, timestamp: 0, blockNumber: 0});
         Point memory _userNewPoint = Point({slope: 0, bias: 0, timestamp: 0, blockNumber: 0});
 
@@ -566,11 +560,7 @@ contract VECake is Ownable, ReentrancyGuard {
     /// @param _user user address
     /// @param _amount: number of tokens to deposit (in CAKE)
     /// @param _lockDuration: Token lock duration
-    function deposit(
-        address _user,
-        uint256 _amount,
-        uint256 _lockDuration
-    ) external onlyCakePool {
+    function deposit(address _user, uint256 _amount, uint256 _lockDuration) external onlyCakePool {
         // Do not allow any user to deposit cake in cake pool now after migration initialized.
         // will forbid any deposit operatioin
         revert();
@@ -1065,11 +1055,7 @@ contract VECake is Ownable, ReentrancyGuard {
         emit Redistribute(msg.sender, redistributeAddr, _amount);
     }
 
-    function _unlock(
-        address _user,
-        LockedBalance memory _lock,
-        uint256 _withdrawAmount
-    ) internal {
+    function _unlock(address _user, LockedBalance memory _lock, uint256 _withdrawAmount) internal {
         // Cast here for readability
         uint256 _lockedAmount = SafeCast.toUint256(_lock.amount);
         require(_withdrawAmount <= _lockedAmount, "Amount too large");

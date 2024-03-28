@@ -239,11 +239,7 @@ contract RevenueSharingPool is Ownable, ReentrancyGuard {
 
     /// @notice Claim rewardToken
     /// @dev Perform claim rewardToken
-    function _claim(
-        address _user,
-        address _recipient,
-        uint256 _maxClaimTimestamp
-    ) internal returns (uint256) {
+    function _claim(address _user, address _recipient, uint256 _maxClaimTimestamp) internal returns (uint256) {
         uint256 _userEpoch = 0;
         uint256 _toDistribute = 0;
 

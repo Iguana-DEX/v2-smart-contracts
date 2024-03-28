@@ -14,20 +14,9 @@ interface ICakePool {
         uint256 lockedAmount; // amount deposited during lock period.
     }
 
-    function userInfo(address user)
-        external
-        view
-        returns (
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            uint256,
-            bool,
-            uint256
-        );
+    function userInfo(
+        address user
+    ) external view returns (uint256, uint256, uint256, uint256, uint256, uint256, uint256, bool, uint256);
 
     function freePerformanceFeeUsers(address user) external view returns (bool);
 

@@ -75,11 +75,7 @@ contract PancakeStableSwapWBNBHelper is Ownable {
         IERC20(LPToken).safeTransfer(msg.sender, mintedLPAmount);
     }
 
-    function remove_liquidity(
-        IPancakeStableSwap swap,
-        uint256 _amount,
-        uint256[N_COINS] memory min_amounts
-    ) external {
+    function remove_liquidity(IPancakeStableSwap swap, uint256 _amount, uint256[N_COINS] memory min_amounts) external {
         if (!isWhitelist[address(swap)]) revert NotWhitelist();
         if (swap.N_COINS() != N_COINS) revert InvalidNCOINS();
         if (!isApproved[address(swap)]) initSwapPair(swap);

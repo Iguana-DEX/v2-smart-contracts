@@ -13,11 +13,7 @@ struct ItMap {
 }
 
 library IterableMapping {
-    function insert(
-        ItMap storage self,
-        uint256 key,
-        uint256 value
-    ) internal {
+    function insert(ItMap storage self, uint256 key, uint256 value) internal {
         uint256 keyIndex = self.indexs[key];
         self.data[key] = value;
         if (keyIndex > 0) return;

@@ -2,7 +2,9 @@
 pragma solidity ^0.8.10;
 
 interface IVECake {
-    function userInfo(address user)
+    function userInfo(
+        address user
+    )
         external
         view
         returns (

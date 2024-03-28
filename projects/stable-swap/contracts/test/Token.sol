@@ -6,11 +6,7 @@ import "@openzeppelin-4.5.0/contracts/token/ERC20/ERC20.sol";
 contract Token is ERC20 {
     uint8 private immutable newDecimal;
 
-    constructor(
-        string memory _name,
-        string memory _symbol,
-        uint8 _decimal
-    ) ERC20(_name, _symbol) {
+    constructor(string memory _name, string memory _symbol, uint8 _decimal) ERC20(_name, _symbol) {
         newDecimal = _decimal;
     }
 

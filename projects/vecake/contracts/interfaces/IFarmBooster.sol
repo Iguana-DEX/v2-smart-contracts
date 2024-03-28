@@ -31,10 +31,5 @@ interface IFarmBooster {
     /// @param _prevLockedAmount Existed locks[_user].amount
     /// @param _prevLockedEnd Existed locks[_user].end
     /// @param _withdrawAmount Cake amount
-    function unlock(
-        address _user,
-        int128 _prevLockedAmount,
-        uint256 _prevLockedEnd,
-        uint256 _withdrawAmount
-    ) external;
+    function unlock(address _user, int128 _prevLockedAmount, uint256 _prevLockedEnd, uint256 _withdrawAmount) external;
 }

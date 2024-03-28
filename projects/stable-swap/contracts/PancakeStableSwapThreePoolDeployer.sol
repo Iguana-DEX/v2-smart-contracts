@@ -17,15 +17,7 @@ contract PancakeStableSwapThreePoolDeployer is Ownable {
         address tokenA,
         address tokenB,
         address tokenC
-    )
-        internal
-        pure
-        returns (
-            address,
-            address,
-            address
-        )
-    {
+    ) internal pure returns (address, address, address) {
         require(tokenA != tokenB && tokenA != tokenC && tokenB != tokenC, "IDENTICAL_ADDRESSES");
         address tmp;
         if (tokenA > tokenB) {

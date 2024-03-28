@@ -23,7 +23,7 @@ contract VCake is Ownable {
     }
 
     uint256 public constant WEEK = 7 days;
-    uint256 public constant MULTIPLIER = 10**18;
+    uint256 public constant MULTIPLIER = 10 ** 18;
     uint256 public UNLOCK_FREE_DURATION = 1 weeks; // 1 week
     uint256 public DURATION_FACTOR_OVERDUE = 180 days; // 180 days, in order to calculate overdue fee.
     uint256 public constant PRECISION_FACTOR = 1e12; // precision factor.
@@ -74,11 +74,7 @@ contract VCake is Ownable {
      * @param _masterchefV2: MasterChefV2 contract
      * @param _pid: cake pool ID in MasterChefV2
      */
-    constructor(
-        ICakePool _cakePool,
-        IMasterChefV2 _masterchefV2,
-        uint256 _pid
-    ) {
+    constructor(ICakePool _cakePool, IMasterChefV2 _masterchefV2, uint256 _pid) {
         CakePool = _cakePool;
         MasterchefV2 = _masterchefV2;
         CakePoolPID = _pid;
@@ -154,11 +150,7 @@ contract VCake is Ownable {
     /// @param _address User's wallet address. Only global if 0x0
     /// @param _prevLocked User's previous locked balance and end lock time
     /// @param _newLocked User's new locked balance and end lock time
-    function _checkpoint(
-        address _address,
-        LockedBalance memory _prevLocked,
-        LockedBalance memory _newLocked
-    ) internal {
+    function _checkpoint(address _address, LockedBalance memory _prevLocked, LockedBalance memory _newLocked) internal {
         Point memory _userPrevPoint = Point({slope: 0, bias: 0, timestamp: 0, blockNumber: 0});
         Point memory _userNewPoint = Point({slope: 0, bias: 0, timestamp: 0, blockNumber: 0});
 
@@ -383,11 +375,7 @@ contract VCake is Ownable {
     /// @param _user user address
     /// @param _amount: number of tokens to deposit (in CAKE)
     /// @param _lockDuration: Token lock duration
-    function deposit(
-        address _user,
-        uint256 _amount,
-        uint256 _lockDuration
-    ) external onlyCakePool {
+    function deposit(address _user, uint256 _amount, uint256 _lockDuration) external onlyCakePool {
         if (initialization[_user]) {
             DepositCache memory cache;
             (

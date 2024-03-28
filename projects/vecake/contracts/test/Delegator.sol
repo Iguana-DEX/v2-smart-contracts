@@ -52,11 +52,7 @@ contract Delegator is ERC20 {
     /// @param user The user address
     /// @param amount The delegated cake amount
     /// @param lockEndTime The lock end time in cake pool.
-    function delegate(
-        address user,
-        uint256 amount,
-        uint256 lockEndTime
-    ) external {
+    function delegate(address user, uint256 amount, uint256 lockEndTime) external {
         _mint(user, amount);
     }
 }

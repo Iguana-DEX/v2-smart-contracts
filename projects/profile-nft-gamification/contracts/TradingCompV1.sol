@@ -65,11 +65,7 @@ contract TradingCompV1 is Ownable {
      * @param _bunnyStationAddress: BunnyMintingStation address
      * @param _cakeTokenAddress: the address of the CAKE token
      */
-    constructor(
-        address _pancakeProfileAddress,
-        address _bunnyStationAddress,
-        address _cakeTokenAddress
-    ) public {
+    constructor(address _pancakeProfileAddress, address _bunnyStationAddress, address _cakeTokenAddress) public {
         pancakeProfile = IPancakeProfile(_pancakeProfileAddress);
         bunnyMintingStation = BunnyMintingStation(_bunnyStationAddress);
         cakeToken = IBEP20(_cakeTokenAddress);
@@ -243,18 +239,9 @@ contract TradingCompV1 is Ownable {
      * @return userPointReward: the number of points to claim/claimed
      * @return canClaimNFT: whether the user gets/got a NFT
      */
-    function claimInformation(address _userAddress)
-        external
-        view
-        returns (
-            bool,
-            bool,
-            uint256,
-            uint256,
-            uint256,
-            bool
-        )
-    {
+    function claimInformation(
+        address _userAddress
+    ) external view returns (bool, bool, uint256, uint256, uint256, bool) {
         bool hasUserRegistered = userTradingStats[_userAddress].hasRegistered;
         if ((currentStatus != CompetitionStatus.Claiming) && (currentStatus != CompetitionStatus.Over)) {
             return (hasUserRegistered, false, 0, 0, 0, false);

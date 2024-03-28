@@ -5,11 +5,5 @@ interface IRevenueSharingPoolFactory {
     function parameters()
         external
         view
-        returns (
-            address VCake,
-            uint256 startTime,
-            address rewardToken,
-            address emergencyReturn,
-            address owner
-        );
+        returns (address VCake, uint256 startTime, address rewardToken, address emergencyReturn, address owner);
 }

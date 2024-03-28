@@ -83,12 +83,7 @@ contract FarmBooster is Ownable {
     /// @param _v3 MasterChefV3 contract address.
     /// @param _cA Limit max boost.
     /// @param _cB Controls difficulties.
-    constructor(
-        address _VECake,
-        IMasterChefV3 _v3,
-        uint256 _cA,
-        uint256 _cB
-    ) {
+    constructor(address _VECake, IMasterChefV3 _v3, uint256 _cA, uint256 _cB) {
         require(_cA >= MIN_CA && _cA <= MAX_CA && _cB > MIN_CB && _cB <= MAX_CB, "Invalid parameter");
         VECake = _VECake;
         MASTER_CHEF_V3 = _v3;
@@ -170,12 +165,7 @@ contract FarmBooster is Ownable {
     /// @param _tokenId token id.
     /// @param _pid pool id.
     /// @param _liquidity token liquidity.
-    function updateUserPoolLiquidity(
-        address _user,
-        uint256 _tokenId,
-        uint256 _pid,
-        uint256 _liquidity
-    ) internal {
+    function updateUserPoolLiquidity(address _user, uint256 _tokenId, uint256 _pid, uint256 _liquidity) internal {
         // update total liquidity in this pool
         userPoolTotalLiquidity[_user][_pid] =
             userPoolTotalLiquidity[_user][_pid] -
@@ -227,11 +217,7 @@ contract FarmBooster is Ownable {
     /// @param _user User address.
     /// @param _tokenId Token Id of position NFT.
     /// @param _pid Id of MasterChef V3 farm pool.
-    function removeBoostMultiplier(
-        address _user,
-        uint256 _tokenId,
-        uint256 _pid
-    ) external onlyMasterChefV3 {
+    function removeBoostMultiplier(address _user, uint256 _tokenId, uint256 _pid) external onlyMasterChefV3 {
         // In order to save gas, no need to check the farms which have never been boosted.
         if (everBoosted[_pid]) {
             updateUserPoolLiquidity(_user, _tokenId, _pid, 0);
@@ -292,12 +278,7 @@ contract FarmBooster is Ownable {
     /// @param _user user address.
     /// @param _pid pool id.
     /// @param _tokenId token id.
-    function _updateBoostMultiplier(
-        ItMap storage itmap,
-        address _user,
-        uint256 _pid,
-        uint256 _tokenId
-    ) internal {
+    function _updateBoostMultiplier(ItMap storage itmap, address _user, uint256 _pid, uint256 _tokenId) internal {
         // Used to be boosted farm pool and current is not, remove from mapping
         if (!whiteList[_pid]) {
             if (itmap.data[_tokenId] > BOOST_PRECISION) {
@@ -346,16 +327,9 @@ contract FarmBooster is Ownable {
         }
     }
 
-    function getUserPositionInfo(uint256 _tokenId)
-        internal
-        view
-        returns (
-            uint128 liquidity,
-            address user,
-            uint256 pid,
-            uint256 boostMultiplier
-        )
-    {
+    function getUserPositionInfo(
+        uint256 _tokenId
+    ) internal view returns (uint128 liquidity, address user, uint256 pid, uint256 boostMultiplier) {
         (liquidity, , , , , , user, pid, boostMultiplier) = MASTER_CHEF_V3.userPositionInfos(_tokenId);
     }
 

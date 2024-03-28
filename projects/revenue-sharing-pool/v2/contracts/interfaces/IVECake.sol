@@ -10,16 +10,14 @@ struct Point {
 
 interface IVECake {
     /// @dev Cake pool deposit will trigger this
-    function deposit(
-        address _user,
-        uint256 _amount,
-        uint256 _lockDuration
-    ) external;
+    function deposit(address _user, uint256 _amount, uint256 _lockDuration) external;
 
     /// @dev Cake pool withdraw will trigger this
     function withdraw(address _user) external;
 
-    function userInfo(address user)
+    function userInfo(
+        address user
+    )
         external
         view
         returns (

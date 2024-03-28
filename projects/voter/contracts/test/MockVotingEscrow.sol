@@ -8,16 +8,14 @@ contract MockVotingEscrow {
     mapping(address => int128) public userSlope;
     mapping(address => uint256) public userLockEnd;
 
-    function createLocksForUser(
-        address addr,
-        int128 slope,
-        uint256 end
-    ) external {
+    function createLocksForUser(address addr, int128 slope, uint256 end) external {
         userSlope[addr] = slope;
         userLockEnd[addr] = end;
     }
 
-    function userInfo(address user)
+    function userInfo(
+        address user
+    )
         external
         view
         returns (

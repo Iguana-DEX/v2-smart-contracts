@@ -63,15 +63,7 @@ contract PancakeStableSwapFactory is Ownable {
         address tokenA,
         address tokenB,
         address tokenC
-    )
-        internal
-        pure
-        returns (
-            address,
-            address,
-            address
-        )
-    {
+    ) internal pure returns (address, address, address) {
         require(tokenA != tokenB && tokenA != tokenC && tokenB != tokenC, "IDENTICAL_ADDRESSES");
         address tmp;
         if (tokenA > tokenB) {
@@ -148,13 +140,7 @@ contract PancakeStableSwapFactory is Ownable {
         addPairInfoInternal(swapContract, t0, t1, t2, LP);
     }
 
-    function addPairInfoInternal(
-        address _swapContract,
-        address _t0,
-        address _t1,
-        address _t2,
-        address _LP
-    ) internal {
+    function addPairInfoInternal(address _swapContract, address _t0, address _t1, address _t2, address _LP) internal {
         StableSwapThreePoolPairInfo storage info = stableSwapPairInfo[_t0][_t1][_t2];
         info.swapContract = _swapContract;
         info.token0 = _t0;
@@ -200,11 +186,10 @@ contract PancakeStableSwapFactory is Ownable {
         info.LPContract = pairInfo.LPContract;
     }
 
-    function getThreePoolPairInfo(address _tokenA, address _tokenB)
-        external
-        view
-        returns (StableSwapThreePoolPairInfo memory info)
-    {
+    function getThreePoolPairInfo(
+        address _tokenA,
+        address _tokenB
+    ) external view returns (StableSwapThreePoolPairInfo memory info) {
         (address t0, address t1) = sortTokens(_tokenA, _tokenB);
         info = threePoolInfo[t0][t1];
     }

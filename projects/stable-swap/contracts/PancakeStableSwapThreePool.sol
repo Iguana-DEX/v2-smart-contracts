@@ -135,7 +135,7 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
             }
             require(coinDecimal <= MAX_DECIMAL, "The maximum decimal cannot exceed 18");
             //set PRECISION_MUL and  RATES
-            PRECISION_MUL[i] = 10**(MAX_DECIMAL - coinDecimal);
+            PRECISION_MUL[i] = 10 ** (MAX_DECIMAL - coinDecimal);
             RATES[i] = PRECISION * PRECISION_MUL[i];
         }
         coins = _coins;
@@ -342,12 +342,7 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
         emit AddLiquidity(msg.sender, amounts, fees, D1, token_supply + mint_amount);
     }
 
-    function get_y(
-        uint256 i,
-        uint256 j,
-        uint256 x,
-        uint256[N_COINS] memory xp_
-    ) internal view returns (uint256) {
+    function get_y(uint256 i, uint256 j, uint256 x, uint256[N_COINS] memory xp_) internal view returns (uint256) {
         // x in the input is converted to the same price/precision
         require((i != j) && (i < N_COINS) && (j < N_COINS), "Illegal parameter");
         uint256 amp = get_A();
@@ -390,11 +385,7 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
         return y;
     }
 
-    function get_dy(
-        uint256 i,
-        uint256 j,
-        uint256 dx
-    ) external view returns (uint256) {
+    function get_dy(uint256 i, uint256 j, uint256 dx) external view returns (uint256) {
         // dx and dy in c-units
         uint256[N_COINS] memory rates = RATES;
         uint256[N_COINS] memory xp = _xp();
@@ -406,11 +397,7 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
         return dy - _fee;
     }
 
-    function get_dy_underlying(
-        uint256 i,
-        uint256 j,
-        uint256 dx
-    ) external view returns (uint256) {
+    function get_dy_underlying(uint256 i, uint256 j, uint256 dx) external view returns (uint256) {
         // dx and dy in underlying units
         uint256[N_COINS] memory xp = _xp();
         uint256[N_COINS] memory precisions = PRECISION_MUL;
@@ -422,12 +409,7 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
         return dy - _fee;
     }
 
-    function exchange(
-        uint256 i,
-        uint256 j,
-        uint256 dx,
-        uint256 min_dy
-    ) external payable nonReentrant {
+    function exchange(uint256 i, uint256 j, uint256 dx, uint256 min_dy) external payable nonReentrant {
         require(!is_killed, "Killed");
         if (!support_BNB) {
             require(msg.value == 0, "Inconsistent quantity"); // Avoid sending BNB by mistake.
@@ -483,10 +465,10 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
         emit RemoveLiquidity(msg.sender, amounts, fees, total_supply - _amount);
     }
 
-    function remove_liquidity_imbalance(uint256[N_COINS] memory amounts, uint256 max_burn_amount)
-        external
-        nonReentrant
-    {
+    function remove_liquidity_imbalance(
+        uint256[N_COINS] memory amounts,
+        uint256 max_burn_amount
+    ) external nonReentrant {
         require(!is_killed, "Killed");
 
         uint256 token_supply = token.totalSupply();
@@ -533,12 +515,7 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
         emit RemoveLiquidityImbalance(msg.sender, amounts, fees, D1, token_supply);
     }
 
-    function get_y_D(
-        uint256 A_,
-        uint256 i,
-        uint256[N_COINS] memory xp,
-        uint256 D
-    ) internal pure returns (uint256) {
+    function get_y_D(uint256 A_, uint256 i, uint256[N_COINS] memory xp, uint256 D) internal pure returns (uint256) {
         /**
         Calculate x[i] if one reduces D from being calculated for xp to D
 
@@ -624,11 +601,7 @@ contract PancakeStableSwapThreePool is Ownable, ReentrancyGuard {
         return dy;
     }
 
-    function remove_liquidity_one_coin(
-        uint256 _token_amount,
-        uint256 i,
-        uint256 min_amount
-    ) external nonReentrant {
+    function remove_liquidity_one_coin(uint256 _token_amount, uint256 i, uint256 min_amount) external nonReentrant {
         // Remove _amount of liquidity all in a form of coin i
         require(!is_killed, "Killed");
         (uint256 dy, uint256 dy_fee) = _calc_withdraw_one_coin(_token_amount, i);

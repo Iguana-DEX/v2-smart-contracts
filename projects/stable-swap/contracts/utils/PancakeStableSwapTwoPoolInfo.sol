@@ -41,19 +41,14 @@ contract PancakeStableSwapTwoPoolInfo {
         return amounts;
     }
 
-    function get_D_mem(
-        address _swap,
-        uint256[N_COINS] memory _balances,
-        uint256 amp
-    ) public view returns (uint256) {
+    function get_D_mem(address _swap, uint256[N_COINS] memory _balances, uint256 amp) public view returns (uint256) {
         return get_D(_xp_mem(_swap, _balances), amp);
     }
 
-    function get_add_liquidity_mint_amount(address _swap, uint256[N_COINS] memory amounts)
-        external
-        view
-        returns (uint256)
-    {
+    function get_add_liquidity_mint_amount(
+        address _swap,
+        uint256[N_COINS] memory amounts
+    ) external view returns (uint256) {
         IPancakeStableSwap swap = IPancakeStableSwap(_swap);
         uint256[N_COINS] memory fees;
         uint256 _fee = (swap.fee() * N_COINS) / (4 * (N_COINS - 1));
@@ -110,11 +105,10 @@ contract PancakeStableSwapTwoPoolInfo {
         return mint_amount;
     }
 
-    function get_add_liquidity_fee(address _swap, uint256[N_COINS] memory amounts)
-        external
-        view
-        returns (uint256[N_COINS] memory liquidityFee)
-    {
+    function get_add_liquidity_fee(
+        address _swap,
+        uint256[N_COINS] memory amounts
+    ) external view returns (uint256[N_COINS] memory liquidityFee) {
         IPancakeStableSwap swap = IPancakeStableSwap(_swap);
         uint256 _fee = (swap.fee() * N_COINS) / (4 * (N_COINS - 1));
         uint256 _admin_fee = swap.admin_fee();
@@ -157,11 +151,10 @@ contract PancakeStableSwapTwoPoolInfo {
         }
     }
 
-    function get_remove_liquidity_imbalance_fee(address _swap, uint256[N_COINS] memory amounts)
-        external
-        view
-        returns (uint256[N_COINS] memory liquidityFee)
-    {
+    function get_remove_liquidity_imbalance_fee(
+        address _swap,
+        uint256[N_COINS] memory amounts
+    ) external view returns (uint256[N_COINS] memory liquidityFee) {
         IPancakeStableSwap swap = IPancakeStableSwap(_swap);
         uint256 _fee = (swap.fee() * N_COINS) / (4 * (N_COINS - 1));
         uint256 _admin_fee = swap.admin_fee();
@@ -188,11 +181,10 @@ contract PancakeStableSwapTwoPoolInfo {
         }
     }
 
-    function _xp_mem(address _swap, uint256[N_COINS] memory _balances)
-        public
-        view
-        returns (uint256[N_COINS] memory result)
-    {
+    function _xp_mem(
+        address _swap,
+        uint256[N_COINS] memory _balances
+    ) public view returns (uint256[N_COINS] memory result) {
         result = RATES(_swap);
         for (uint256 i = 0; i < N_COINS; i++) {
             result[i] = (result[i] * _balances[i]) / PRECISION;
@@ -311,12 +303,7 @@ contract PancakeStableSwapTwoPoolInfo {
         }
     }
 
-    function get_y_D(
-        uint256 A_,
-        uint256 i,
-        uint256[N_COINS] memory xp,
-        uint256 D
-    ) internal pure returns (uint256) {
+    function get_y_D(uint256 A_, uint256 i, uint256[N_COINS] memory xp, uint256 D) internal pure returns (uint256) {
         /**
         Calculate x[i] if one reduces D from being calculated for xp to D
 
@@ -408,13 +395,7 @@ contract PancakeStableSwapTwoPoolInfo {
         adminFee = (dy_fee * swap.admin_fee()) / FEE_DENOMINATOR;
     }
 
-    function get_dx(
-        address _swap,
-        uint256 i,
-        uint256 j,
-        uint256 dy,
-        uint256 max_dx
-    ) external view returns (uint256) {
+    function get_dx(address _swap, uint256 i, uint256 j, uint256 dy, uint256 max_dx) external view returns (uint256) {
         IPancakeStableSwap swap = IPancakeStableSwap(_swap);
         uint256[N_COINS] memory old_balances = balances(_swap);
         uint256[N_COINS] memory xp = _xp_mem(_swap, old_balances);

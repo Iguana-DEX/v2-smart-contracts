@@ -4,7 +4,9 @@ pragma solidity ^0.8.17;
 import "@openzeppelin/contracts-0.8/access/Ownable.sol";
 
 interface IGaugeVoting {
-    function gauges(uint256 _gaugeId)
+    function gauges(
+        uint256 _gaugeId
+    )
         external
         view
         returns (
@@ -56,7 +58,9 @@ contract GaugeVotingAdminUtil is Ownable {
         hash = keccak256(abi.encodePacked(pairAddress, chainId));
     }
 
-    function getGaugeInfoFull(bytes32 _hash)
+    function getGaugeInfoFull(
+        bytes32 _hash
+    )
         external
         view
         returns (

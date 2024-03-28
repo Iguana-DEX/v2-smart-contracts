@@ -2,7 +2,9 @@
 pragma solidity ^0.8.17;
 
 interface IGaugeVoting {
-    function gauges(uint256 _gaugeId)
+    function gauges(
+        uint256 _gaugeId
+    )
         external
         view
         returns (
@@ -18,11 +20,7 @@ interface IGaugeVoting {
 
     function gaugeIndex_(bytes32 _hash) external view returns (uint256 gauge_idx);
 
-    function getGaugeWeight(
-        address gauge_addr,
-        uint256 _chainId,
-        bool inCap
-    ) external view returns (uint256);
+    function getGaugeWeight(address gauge_addr, uint256 _chainId, bool inCap) external view returns (uint256);
 }
 
 contract GaugeVotingCalcV4 {
@@ -71,11 +69,10 @@ contract GaugeVotingCalcV4 {
         return _getTotalCappedPercent(0);
     }
 
-    function _getTotalFinalWeights(uint256 gaugeTotalWeight, uint256 gaugeTotalCappedPercent)
-        internal
-        view
-        returns (uint256 gaugeTotalFinalWeights)
-    {
+    function _getTotalFinalWeights(
+        uint256 gaugeTotalWeight,
+        uint256 gaugeTotalCappedPercent
+    ) internal view returns (uint256 gaugeTotalFinalWeights) {
         // get total final adjusted vote weights
         if (gaugeTotalWeight == 0) {
             gaugeTotalWeight = _getTotalGaugeWeight();
@@ -190,7 +187,9 @@ contract GaugeVotingCalcV4 {
         );
     }
 
-    function getGaugeWeightDetails(uint256 _gaugeId)
+    function getGaugeWeightDetails(
+        uint256 _gaugeId
+    )
         external
         view
         returns (
@@ -224,11 +223,7 @@ contract GaugeVotingCalcV4 {
         );
     }
 
-    function getGaugeWeight(
-        address _gaugeAddr,
-        uint256 _chainId,
-        bool _inCap
-    ) public view returns (uint256) {
+    function getGaugeWeight(address _gaugeAddr, uint256 _chainId, bool _inCap) public view returns (uint256) {
         bytes32 gaugeHash = keccak256(abi.encodePacked(_gaugeAddr, _chainId));
         uint256 gaugeIdx = (IGaugeVoting(gaugeVotingAddress).gaugeIndex_(gaugeHash) - 1);
         (uint256 gaugeWeight, , , , uint256 gaugeInCapWeight, , ) = _getGaugeWeightDetails(gaugeIdx, 0, 0, 0);
@@ -258,11 +253,7 @@ contract GaugeVotingCalcV4 {
         }
     }
 
-    function getGaugeRelativeWeight(
-        address _gaugeAddr,
-        uint256 _chainId,
-        bool _inCap
-    ) public view returns (uint256) {
+    function getGaugeRelativeWeight(address _gaugeAddr, uint256 _chainId, bool _inCap) public view returns (uint256) {
         bytes32 gaugeHash = keccak256(abi.encodePacked(_gaugeAddr, _chainId));
         uint256 gaugeIdx = (IGaugeVoting(gaugeVotingAddress).gaugeIndex_(gaugeHash) - 1);
         (, , uint256 gaugeRawPercent, , , , uint256 gaugeFinalPercent) = _getGaugeWeightDetails(gaugeIdx, 0, 0, 0);

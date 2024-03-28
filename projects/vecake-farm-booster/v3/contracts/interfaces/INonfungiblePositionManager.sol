@@ -17,7 +17,9 @@ interface INonfungiblePositionManager {
     /// @return feeGrowthInside1LastX128 The fee growth of token1 as of the last action on the individual position
     /// @return tokensOwed0 The uncollected amount of token0 owed to the position as of the last computation
     /// @return tokensOwed1 The uncollected amount of token1 owed to the position as of the last computation
-    function positions(uint256 tokenId)
+    function positions(
+        uint256 tokenId
+    )
         external
         view
         returns (
