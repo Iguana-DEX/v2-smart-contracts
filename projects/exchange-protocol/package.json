@@ -6,13 +6,16 @@
   "private": true,
   "scripts": {
     "compile": "npx hardhat compile",
-    "deploy:testnet": "npx hardhat run --network testnet scripts/deploy.ts",
-    "deploy:mainnet": "npx hardhat run --network mainnet scripts/deploy.ts",
+    "deploy:testnet": "npx hardhat run --network etherlinkTestnet scripts/deploy.ts",
+    "deploy:mainnet": "npx hardhat run --network etherlink scripts/deploy.ts",
     "test": "npx hardhat test",
     "test:coverage": "npx hardhat coverage",
-    "test:size-contracts": "npx hardhat size-contracts"
+    "test:size-contracts": "npx hardhat size-contracts",
+    "verify:testnet": "npx hardhat run --network etherlinkTestnet scripts/verify.ts",
+    "verify:mainnet": "npx hardhat run --network etherlink scripts/verify.ts"
   },
   "devDependencies": {
+    "@nomicfoundation/hardhat-verify": "^2.0.5",
     "@openzeppelin/contracts": "^4.2.0",
     "@uniswap/lib": "4.0.1-alpha"
   }
